@@ -164,6 +164,11 @@ clasificarEmision e
     | e <= 15.0 = "Nivel moderado"
     | otherwise = "Nivel alto"
 
+mostrarReporteBus :: Double -> Unidad -> IO ()
+mostrarReporteBus dist u = do
+    let emision = calcularEmisionCO2 dist u
+    putStrLn (codUnidad u ++ " | " ++ tipoUnidad u ++ " | Combustible: " ++ show (combustibleUnidad u) ++ " | Emision: " ++ show emision ++ " kg CO2 | " ++ clasificarEmision emision)
+
 main :: IO ()
 main = do
     putStrLn "================================================"
@@ -180,14 +185,7 @@ main = do
     putStrLn ("Unidades en flota: " ++ show (length unidades))
     putStrLn ("Pedidos cargados: " ++ show (length pedidos))
 
-    putStrLn "\n--- Primeros 3 Puntos ---"
-    mapM_ (putStrLn . show) (take 3 puntos)
-
-    putStrLn "\n--- Primeras 3 Unidades ---"
-    mapM_ (putStrLn . show) (take 3 unidades)
-
-    putStrLn "\n--- Prueba Funcionalidad de Contaminacion ---"
-    let bus = head unidades
-    let dist = 14.5
-    let emision = calcularEmisionCO2 dist bus
-    putStrLn ("Bus: " ++ codUnidad bus ++ " | Distancia: " ++ show dist ++ " km | Emision: " ++ show emision ++ " kg CO2 | " ++ clasificarEmision emision)
+    putStrLn "\n========================================================"
+    putStrLn " REPORTE AMBIENTAL DE TODA LA FLOTA (Ruta base: 14.5 km)"
+    putStrLn "========================================================"
+    mapM_ (mostrarReporteBus 14.5) unidades
