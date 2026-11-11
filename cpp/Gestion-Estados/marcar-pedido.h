@@ -3,4 +3,4 @@
 
 using namespace std;
 
-void marcarPedidoEntregado(Pedido& pedido);
+void marcarPedidoEntregado(Pedido& pedido, Unidad& unidadAsignada);

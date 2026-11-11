@@ -1,6 +1,3 @@
-#ifndef STRUCTURES_H
-#define STRUCTURES_H
-
 #include <string>
 
 using namespace std;
@@ -89,5 +86,3 @@ string estadoConexionToString(EstadoConexion e);
 string estadoUnidadToString(EstadoUnidad e);
 string prioridadToString(PrioridadPedido p);
 string estadoPedidoToString(EstadoPedido e);
-
-#endif
