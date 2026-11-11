@@ -74,14 +74,14 @@ struct Unidad {
 
 struct Pedido {
     string codigo;
-    string origen;
-    string destino;
+    Punto origen;
+    Punto destino;
     int carga;
     PrioridadPedido prioridad;
     EstadoPedido estado;
-    string unidadAsignada;  
+    Unidad unidadAsignada;  
     string horaSolicitud;   
-    string unidadTransbordo;
+    Unidad unidadTransbordo;
 };
 
 string tipoPuntoToString(TipoPunto t);
@@ -89,11 +89,5 @@ string estadoConexionToString(EstadoConexion e);
 string estadoUnidadToString(EstadoUnidad e);
 string prioridadToString(PrioridadPedido p);
 string estadoPedidoToString(EstadoPedido e);
-
-TipoPunto stringToTipoPunto(const string& s);
-EstadoConexion stringToEstadoConexion(const string& s);
-EstadoUnidad stringToEstadoUnidad(const string& s);
-PrioridadPedido stringToPrioridad(const string& s);
-EstadoPedido stringToEstadoPedido(const string& s);
 
 #endif

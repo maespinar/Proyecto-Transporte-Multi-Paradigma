@@ -32,30 +32,3 @@ string estadoPedidoToString(EstadoPedido e) {
         default:        return "pendiente";
     }
 }
-
-TipoPunto stringToTipoPunto(const string& s) {
-    if (s == "Terminal")    return TERMINAL;
-    if (s == "Estacion")    return ESTACION;
-    if (s == "Intercambio") return INTERCAMBIO;
-    return PARADERO;
-}
-
-EstadoConexion stringToEstadoConexion(const string& s) {
-    return (s == "cerrada") ? CERRADA : HABILITADA;
-}
-
-EstadoUnidad stringToEstadoUnidad(const string& s) {
-    return (s == "ocupada") ? OCUPADA : DISPONIBLE;
-}
-
-PrioridadPedido stringToPrioridad(const string& s) {
-    if (s == "alta")  return ALTA;
-    if (s == "media") return MEDIA;
-    return BAJA;
-}
-
-EstadoPedido stringToEstadoPedido(const string& s) {
-    if (s == "asignado")  return ASIGNADO;
-    if (s == "entregado") return ENTREGADO;
-    return PENDIENTE;
-}
