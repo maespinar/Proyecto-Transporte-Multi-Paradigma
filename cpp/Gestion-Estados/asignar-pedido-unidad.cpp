@@ -1,12 +1,13 @@
 #include "asignar-pedido-unidad.h"
 
-void asignarPedidoUnidad(Pedido& pedido, const Unidad& unidadAsignada, const string& horaSolicitud) {
+void asignarPedidoUnidad(Pedido& pedido, Unidad& unidadAsignada, const string& horaSolicitud) {
     if (pedido.estado == PENDIENTE) {
         if (unidadAsignada.estado == DISPONIBLE) {
             if (unidadAsignada.capacidad >= pedido.carga) {
                 pedido.unidadAsignada = unidadAsignada;
                 pedido.horaSolicitud = horaSolicitud;
                 pedido.estado = ASIGNADO;
+                unidadAsignada.estado = OCUPADA;
             } else {
                 cout << "Error: La unidad asignada no tiene suficiente capacidad para el pedido." << endl;
             }

@@ -3,4 +3,4 @@
 
 using namespace std;
 
-void actualizarConexion(Conexion& conexion, const EstadoConexion& nuevoEstado);
+void actualizarConexion(Conexion& conexion, const EstadoConexion nuevoEstado);
