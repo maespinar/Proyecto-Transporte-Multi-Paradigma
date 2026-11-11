@@ -1,0 +1,13 @@
+codigo,tipo,capacidad,costo_km,estado,tipo_combustible,factor_emision,km_acumulados,km_limite_mantenimiento
+U01,Articulado_18m,120,8.50,ocupada,GNV,0.42,495.0,500.0
+U02,Estandar_12m,80,5.20,ocupada,Diesel,0.68,310.0,450.0
+U03,Estandar_12m,80,5.20,disponible,GNV,0.40,380.0,500.0
+U04,Electrico_12m,80,3.65,disponible,Electrico,0.00,150.0,400.0
+U05,Articulado_18m_Expreso,49,8.50,disponible,GNV,0.42,210.0,500.0
+U06,Estandar_12m_Sentado,36,4.86,disponible,Diesel,0.65,446.0,450.0
+U07,Articulado_18m,120,8.50,ocupada,GNV,0.42,410.0,500.0
+U08,Estandar_12m,80,5.20,disponible,GNV,0.40,492.5,500.0
+U09,Electrico_12m,80,3.65,ocupada,Electrico,0.00,280.0,400.0
+U10,Estandar_12m,80,5.20,disponible,Diesel,0.68,195.0,450.0
+U11,Articulado_18m,120,8.50,disponible,GNV,0.42,340.0,500.0
+U12,Estandar_12m_Sentado,36,4.86,disponible,GNV,0.38,448.0,450.0
