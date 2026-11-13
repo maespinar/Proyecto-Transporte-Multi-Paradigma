@@ -1,6 +1,5 @@
 module Main where
 
-import System.IO
 import LecturaDeArchivosCSV.LecturaCSV
 import CalculoDeEmisionesCO2.Emisiones
 
