@@ -85,8 +85,6 @@ Los menús, la interacción detallada con el usuario, los reportes, las validaci
 | 3. Matías Ariel Espinar Monzón | 4.1.4, 4.1.5 | 4.2.5, 4.2.6 | 4.3.4 | Autonomía y mantenimiento preventivo |
 | 4. Renzo Muñoz Guevara | 4.1.6, 4.1.7 | 4.2.7 | 4.3.5, 4.3.6 | Paraderos críticos por demanda |
 
-El usuario es **Matías Ariel Espinar Monzón, integrante 3**. Su alcance habitual comprende C++ 4.1.4 y 4.1.5 (gestión de estados y persistencia), Haskell 4.2.5 y 4.2.6 (costos de rutas y reporte de solicitudes), Prolog 4.3.4 (rutas evitando un punto) y la funcionalidad adicional de autonomía y mantenimiento preventivo en Haskell y C++. Esta identificación delimita el trabajo cuando la solicitud se refiere a «mi parte»; no autoriza a implementar todo ese alcance sin una tarea concreta. Un encargo explícito del usuario puede ampliar el alcance.
-
 - Antes de editar, identificar los archivos de la funcionalidad solicitada y revisar los cambios locales existentes con `git status` y, cuando corresponda, `git diff`.
 - No sobrescribir, revertir ni reformatear el trabajo de otros integrantes. No completar o corregir módulos ajenos solo porque se detecten pendientes.
 - Las modificaciones en menús, archivos principales o tipos compartidos deben ser las mínimas necesarias para integrar la funcionalidad solicitada, conservando el comportamiento e interfaces existentes.

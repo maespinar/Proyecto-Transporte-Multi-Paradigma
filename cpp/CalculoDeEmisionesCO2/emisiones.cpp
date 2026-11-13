@@ -1,7 +1,5 @@
-#ifndef EMISIONES_HPP
-#define EMISIONES_HPP
-
-#include "data/structures.h"
+#include "emisiones.h"
+#include "../data/structures.h"
 #include <iomanip>
 #include <iostream>
 #include <queue>
@@ -134,5 +132,3 @@ void procesarCalculoEmision(const vector<Pedido> &pedidos,
        << distancia << " km, Emision " << emisionTotal << " kg CO2, " << nivel
        << endl;
 }
-
-#endif
