@@ -158,6 +158,26 @@ cargarPedidos ruta = do
 calcularEmisionCO2 :: Double -> Unidad -> Double
 calcularEmisionCO2 distancia u = distancia * factorEmision u
 
+-- 4.2.3 - Autor: Diego Alejandro Chuquiure Vargas.
+-- Primero se descartan los cierres. Luego se buscan los extremos vecinos.
+vecinos :: String -> [Conexion] -> [String]
+vecinos punto conexiones = foldr agregarSinRepetir [] (buscarVecinos punto (filter conexionHabilitada conexiones))
+
+conexionHabilitada :: Conexion -> Bool
+conexionHabilitada conexion = estadoConexion conexion == Habilitada
+
+buscarVecinos :: String -> [Conexion] -> [String]
+buscarVecinos _ [] = []
+buscarVecinos punto (conexion:resto)
+    | origConexion conexion == punto = destConexion conexion : buscarVecinos punto resto
+    | destConexion conexion == punto = origConexion conexion : buscarVecinos punto resto
+    | otherwise = buscarVecinos punto resto
+
+agregarSinRepetir :: String -> [String] -> [String]
+agregarSinRepetir punto acumulados
+    | punto `elem` acumulados = acumulados
+    | otherwise = punto : acumulados
+
 clasificarEmision :: Double -> String
 clasificarEmision e
     | e <= 8.0  = "Nivel bueno"
@@ -184,6 +204,9 @@ main = do
     putStrLn ("Conexiones cargadas: " ++ show (length conexiones))
     putStrLn ("Unidades en flota: " ++ show (length unidades))
     putStrLn ("Pedidos cargados: " ++ show (length pedidos))
+
+    putStrLn "\n--- CONECTIVIDAD Y RUTAS HABILITADAS ---"
+    putStrLn ("Vecinos de P14: " ++ show (vecinos "P14" conexiones))
 
     putStrLn "\n========================================================"
     putStrLn " REPORTE AMBIENTAL DE TODA LA FLOTA (Ruta base: 14.5 km)"
