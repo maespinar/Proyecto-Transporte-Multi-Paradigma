@@ -178,6 +178,29 @@ agregarSinRepetir punto acumulados
     | punto `elem` acumulados = acumulados
     | otherwise = punto : acumulados
 
+-- 4.2.4 - Autor: Diego Alejandro Chuquiure Vargas.
+-- Busqueda recursiva: cada rama lleva sus propios puntos visitados.
+rutasPosibles :: String -> String -> [Conexion] -> [[String]]
+rutasPosibles origen destino conexiones = buscarRutas origen destino [origen] conexiones
+
+buscarRutas :: String -> String -> [String] -> [Conexion] -> [[String]]
+buscarRutas actual destino visitados conexiones
+    | actual == destino = [reverse visitados]
+    | otherwise = continuarRutas (vecinos actual conexiones) destino visitados conexiones
+
+-- Se prueba un vecino a la vez. ++ junta sus rutas con las de los demas.
+continuarRutas :: [String] -> String -> [String] -> [Conexion] -> [[String]]
+continuarRutas [] _ _ _ = []
+continuarRutas (siguiente:resto) destino visitados conexiones
+    | siguiente `elem` visitados = continuarRutas resto destino visitados conexiones
+    | otherwise = buscarRutas siguiente destino (siguiente:visitados) conexiones ++
+                  continuarRutas resto destino visitados conexiones
+
+mostrarRutasPedido :: [Conexion] -> Pedido -> IO ()
+mostrarRutasPedido conexiones pedido =
+    putStrLn (codPedido pedido ++ " (" ++ origPedido pedido ++ " -> " ++ destPedido pedido ++
+              "): " ++ show (rutasPosibles (origPedido pedido) (destPedido pedido) conexiones))
+
 clasificarEmision :: Double -> String
 clasificarEmision e
     | e <= 8.0  = "Nivel bueno"
@@ -207,6 +230,7 @@ main = do
 
     putStrLn "\n--- CONECTIVIDAD Y RUTAS HABILITADAS ---"
     putStrLn ("Vecinos de P14: " ++ show (vecinos "P14" conexiones))
+    mapM_ (mostrarRutasPedido conexiones) pedidos
 
     putStrLn "\n========================================================"
     putStrLn " REPORTE AMBIENTAL DE TODA LA FLOTA (Ruta base: 14.5 km)"
