@@ -1,0 +1,6 @@
+codigo,nombre,tipo,zona,permite_transbordo
+P01,Inicio,Terminal,Ate,false
+P02,Intercambio,Intercambio,Surco,true
+P03,Destino,Paradero,Surco,false
+P04,Desvio,Paradero,Surco,false
+P05,Aislado,Paradero,Ate,false

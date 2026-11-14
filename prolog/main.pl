@@ -5,6 +5,9 @@
 :- dynamic unidad/9.
 :- dynamic pedido/9.
 
+% Aporte de Diego: cargar las reglas nuevas sin cambiar el lector del grupo.
+:- ensure_loaded('rutas.pl').
+
 ruta_archivo(Rel, Ruta) :-
     (   exists_file(Rel) -> Ruta = Rel
     ;   atom_concat('../', Rel, Sub), exists_file(Sub) -> Ruta = Sub
