@@ -1,6 +1,7 @@
 #include "data/structures.h"
 #include "emisiones.hpp"
 #include "Registro/registro.h"
+#include "Transbordos/transbordos.h"
 #include "data/persistencia.h"
 #include <fstream>
 #include <iomanip>
@@ -254,6 +255,7 @@ void mostrarMenu() {
   cout << "7. Salir" << endl;
   // Aporte de Diego: registro y transbordos.
   cout << "8. Registrar punto, conexion, unidad o solicitud" << endl;
+  cout << "9. Planificar y asignar transbordo ante contingencia" << endl;
   cout << "Seleccione una opcion: ";
 }
 
@@ -268,6 +270,8 @@ int main(int argc, char* argv[]) {
   // Aporte de Diego: conservar la misma carpeta al guardar registros y transbordos.
   string carpetaDatos = "../data";
   if (!existeArchivo("../data/puntos.csv")) carpetaDatos = "data";
+  string scriptTransbordo = "prolog/consulta_transbordo.pl";
+  if (!existeArchivo(scriptTransbordo)) scriptTransbordo = "../prolog/consulta_transbordo.pl";
   // Una carpeta opcional permite probar el aporte sin modificar los CSV del grupo.
   if (argc > 1) {
     carpetaDatos = argv[1];
@@ -358,6 +362,8 @@ int main(int argc, char* argv[]) {
       cout << "Cerrando sistema..." << endl;
     } else if (opcion == 8) {
       procesarRegistro(puntos, conexiones, unidades, pedidos, carpetaDatos);
+    } else if (opcion == 9) {
+      procesarTransbordo(pedidos, unidades, puntos, conexiones, carpetaDatos, scriptTransbordo);
     } else {
       cout << "Opcion no valida, intente nuevamente." << endl;
     }

@@ -1,0 +1,5 @@
+codigo,origen,destino,carga,prioridad,estado,unidad_asignada,hora_solicitud,unidad_transbordo
+S001,P01,P03,45,alta,pendiente,,18:00,
+S002,P01,P03,70,media,pendiente,,18:15,
+S004,P01,P05,20,baja,pendiente,,18:30,
+S005,P01,P04,20,baja,pendiente,,18:45,

@@ -1,0 +1,4 @@
+codigo,tipo,capacidad,costo_km,estado,tipo_combustible,factor_emision,km_acumulados,km_limite_mantenimiento
+U01,Bus,60,5.2,disponible,GNV,0.4,0,500
+U02,Bus,60,5.2,disponible,Electrico,0.0,0,500
+U03,Bus,44,5.2,disponible,Diesel,0.6,0,500
