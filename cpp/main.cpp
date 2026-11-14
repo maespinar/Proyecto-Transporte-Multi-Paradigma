@@ -1,5 +1,7 @@
 #include "data/structures.h"
 #include "emisiones.hpp"
+#include "Registro/registro.h"
+#include "data/persistencia.h"
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -250,10 +252,12 @@ void mostrarMenu() {
   cout << "5. Listar pedidos de transporte" << endl;
   cout << "6. Calcular emision de CO2 de bus por ruta" << endl;
   cout << "7. Salir" << endl;
+  // Aporte de Diego: registro y transbordos.
+  cout << "8. Registrar punto, conexion, unidad o solicitud" << endl;
   cout << "Seleccione una opcion: ";
 }
 
-int main() {
+int main(int argc, char* argv[]) {
   vector<Punto> puntos;
   vector<Conexion> conexiones;
   vector<Unidad> unidades;
@@ -261,6 +265,20 @@ int main() {
 
   cout << "Iniciando carga de datos desde archivos CSV..." << endl;
 
+  // Aporte de Diego: conservar la misma carpeta al guardar registros y transbordos.
+  string carpetaDatos = "../data";
+  if (!existeArchivo("../data/puntos.csv")) carpetaDatos = "data";
+  // Una carpeta opcional permite probar el aporte sin modificar los CSV del grupo.
+  if (argc > 1) {
+    carpetaDatos = argv[1];
+    if (!cargarPuntos(carpetaDatos + "/puntos.csv", puntos) ||
+        !cargarConexiones(carpetaDatos + "/conexiones.csv", conexiones) ||
+        !cargarUnidades(carpetaDatos + "/unidades.csv", unidades) ||
+        !cargarPedidos(carpetaDatos + "/pedidos.csv", pedidos, puntos, unidades)) {
+      cout << "No se pudieron cargar los CSV de prueba." << endl;
+      return 1;
+    }
+  } else {
   if (!cargarPuntos("../data/puntos.csv", puntos)) {
     cargarPuntos("data/puntos.csv", puntos);
   }
@@ -272,6 +290,8 @@ int main() {
   }
   if (!cargarPedidos("../data/pedidos.csv", pedidos, puntos, unidades)) {
     cargarPedidos("data/pedidos.csv", pedidos, puntos, unidades);
+  }
+
   }
 
   if (puntos.empty() || conexiones.empty() || unidades.empty()) {
@@ -286,6 +306,15 @@ int main() {
   while (opcion != 7) {
     mostrarMenu();
     cin >> opcion;
+    // Aporte de Diego: recuperar la entrada despues de un registro invalido.
+    if (!cin) {
+      if (cin.eof()) break;
+      cin.clear();
+      string restoLinea;
+      getline(cin, restoLinea);
+      cout << "Ingrese una opcion numerica." << endl;
+      continue;
+    }
 
     if (opcion == 1) {
       cout << "\n--- RESUMEN DEL SISTEMA ---" << endl;
@@ -327,6 +356,8 @@ int main() {
       procesarCalculoEmision(pedidos, unidades, conexiones);
     } else if (opcion == 7) {
       cout << "Cerrando sistema..." << endl;
+    } else if (opcion == 8) {
+      procesarRegistro(puntos, conexiones, unidades, pedidos, carpetaDatos);
     } else {
       cout << "Opcion no valida, intente nuevamente." << endl;
     }
