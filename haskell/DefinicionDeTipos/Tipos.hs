@@ -48,13 +48,13 @@ data Unidad = Unidad {
 
 data Pedido = Pedido {
     codPedido :: String,
-    origPedido :: String,
-    destPedido :: String,
+    origPedido :: Punto,
+    destPedido :: Punto,
     cargaPedido :: Int,
     prioridadPedido :: PrioridadPedido,
     estadoPedido :: EstadoPedido,
-    unidadAsignada :: String,
+    unidadAsignada :: Unidad,
     horaSolicitud :: String,
-    unidadTransbordo :: String
+    unidadTransbordo :: Unidad
 } deriving (Show, Eq)
 
