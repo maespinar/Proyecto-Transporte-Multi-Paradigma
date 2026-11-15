@@ -53,8 +53,8 @@ data Pedido = Pedido {
     cargaPedido :: Int,
     prioridadPedido :: PrioridadPedido,
     estadoPedido :: EstadoPedido,
-    unidadAsignada :: Unidad,
+    unidadAsignada :: String,
     horaSolicitud :: String,
-    unidadTransbordo :: Unidad
-} deriving (Show, Eq)
+    unidadTransbordo :: String
+} deriving (Show, Eq) -- unidadXXXX debe ser tipo Unidad
 
