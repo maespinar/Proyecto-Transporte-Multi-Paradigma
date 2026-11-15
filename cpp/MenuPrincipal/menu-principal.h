@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <string>
 
 struct Punto;
 struct Conexion;
@@ -8,7 +9,7 @@ struct Unidad;
 struct Pedido;
 
 void mostrarMenu();
-void ejecutarMenuPrincipal(const std::vector<Punto> &puntos,
-                          const std::vector<Conexion> &conexiones,
-                          const std::vector<Unidad> &unidades,
-                          const std::vector<Pedido> &pedidos);
+void ejecutarMenuPrincipal(std::vector<Punto> &puntos,
+                          std::vector<Conexion> &conexiones,
+                          std::vector<Unidad> &unidades,
+                          std::vector<Pedido> &pedidos, const std::string& carpetaDatos = "data");

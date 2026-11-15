@@ -1,6 +1,8 @@
 #include "menu-principal.h"
 #include "../data/structures.h"
 #include "../CalculoDeEmisionesCO2/emisiones.h"
+#include "../Registro/registro.h"
+#include "../Transbordos/transbordos.h"
 #include <iostream>
 #include <string>
 
@@ -25,17 +27,27 @@ void mostrarMenu() {
   cout << "5. Listar pedidos de transporte" << endl;
   cout << "6. Calcular emision de CO2 de bus por ruta" << endl;
   cout << "7. Salir" << endl;
+  cout << "8. Registrar punto, conexion, unidad o solicitud" << endl;
+  cout << "9. Planificar y asignar transbordo ante contingencia" << endl;
   cout << "Seleccione una opcion: ";
 }
 
-void ejecutarMenuPrincipal(const vector<Punto> &puntos,
-                          const vector<Conexion> &conexiones,
-                          const vector<Unidad> &unidades,
-                          const vector<Pedido> &pedidos) {
+void ejecutarMenuPrincipal(vector<Punto> &puntos,
+                          vector<Conexion> &conexiones,
+                          vector<Unidad> &unidades,
+                          vector<Pedido> &pedidos, const string& carpetaDatos) {
   int opcion = 0;
   while (opcion != 7) {
     mostrarMenu();
     cin >> opcion;
+    if (!cin) {
+      if (cin.eof()) break;
+      cin.clear();
+      string restoLinea;
+      getline(cin, restoLinea);
+      cout << "Ingrese una opcion numerica." << endl;
+      continue;
+    }
 
     if (opcion == 1) {
       cout << "\n--- RESUMEN DEL SISTEMA ---" << endl;
@@ -77,6 +89,11 @@ void ejecutarMenuPrincipal(const vector<Punto> &puntos,
       procesarCalculoEmision(pedidos, unidades, conexiones);
     } else if (opcion == 7) {
       cout << "Cerrando sistema..." << endl;
+    } else if (opcion == 8) {
+      procesarRegistro(puntos, conexiones, unidades, pedidos, carpetaDatos);
+    } else if (opcion == 9) {
+      procesarTransbordo(pedidos, unidades, puntos, conexiones, carpetaDatos,
+                         "prolog/consulta_transbordo.pl");
     } else {
       cout << "Opcion no valida, intente nuevamente." << endl;
     }

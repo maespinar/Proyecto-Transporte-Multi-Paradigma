@@ -230,29 +230,20 @@ bool cargarPedidos(string ruta, vector<Pedido> &pedidos,
 bool cargarDatosIniciales(vector<Punto> &puntos,
                          vector<Conexion> &conexiones,
                          vector<Unidad> &unidades,
-                         vector<Pedido> &pedidos) {
+                         vector<Pedido> &pedidos,
+                         const string& carpetaDatos) {
   cout << "Iniciando carga de datos desde archivos CSV..." << endl;
-
-  if (!cargarPuntos("../data/puntos.csv", puntos)) {
-    cargarPuntos("data/puntos.csv", puntos);
-  }
-  if (!cargarConexiones("../data/conexiones.csv", conexiones)) {
-    cargarConexiones("data/conexiones.csv", conexiones);
-  }
-  if (!cargarUnidades("../data/unidades.csv", unidades)) {
-    cargarUnidades("data/unidades.csv", unidades);
-  }
-  if (!cargarPedidos("../data/pedidos.csv", pedidos, puntos, unidades)) {
-    cargarPedidos("data/pedidos.csv", pedidos, puntos, unidades);
-  }
-
-  if (puntos.empty() || conexiones.empty() || unidades.empty()) {
-    cout << "Error critico: No se pudieron cargar los datos de la carpeta data/"
-         << endl;
+  if (!cargarPuntos(carpetaDatos + "/puntos.csv", puntos) ||
+      !cargarConexiones(carpetaDatos + "/conexiones.csv", conexiones) ||
+      !cargarUnidades(carpetaDatos + "/unidades.csv", unidades) ||
+      !cargarPedidos(carpetaDatos + "/pedidos.csv", pedidos, puntos, unidades)) {
+    cout << "Error: No se pudieron cargar los CSV de " << carpetaDatos << endl;
     return false;
   }
-
+  if (puntos.empty() || conexiones.empty() || unidades.empty()) {
+    cout << "Error critico: faltan puntos, conexiones o unidades." << endl;
+    return false;
+  }
   cout << "Carga completada exitosamente." << endl;
-
   return true;
 }

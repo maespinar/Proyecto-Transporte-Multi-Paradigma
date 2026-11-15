@@ -17,4 +17,4 @@ bool cargarPedidos(std::string ruta, std::vector<Pedido> &pedidos,
 bool cargarDatosIniciales(std::vector<Punto> &puntos,
                          std::vector<Conexion> &conexiones,
                          std::vector<Unidad> &unidades,
-                         std::vector<Pedido> &pedidos);
+                         std::vector<Pedido> &pedidos, const std::string& carpetaDatos = "data");

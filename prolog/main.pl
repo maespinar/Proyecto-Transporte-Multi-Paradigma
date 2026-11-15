@@ -1,5 +1,6 @@
 :- use_module('LecturaDeArchivosCSV/lectura-csv.pl').
 :- use_module('CalculoDeEmisionesCO2/emisiones.pl').
+:- use_module('rutas.pl').
 
 main :-
     writeln('================================================'),
