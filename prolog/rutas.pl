@@ -1,3 +1,7 @@
+:- module(rutas, [conectado/3, alcanzable/2, ruta_red/6, ruta_habilitada/5,
+                 ruta_habitual_bloqueada/3, tramo_bloqueado/3, mejor_transbordo/7]).
+:- use_module('LecturaDeArchivosCSV/lectura-csv.pl', [punto/5, conexion/5]).
+
 % 4.3.2 - Autor: Diego Alejandro Chuquiure Vargas.
 % Dos reglas porque cada tramo se puede recorrer en ambos sentidos.
 conectado(Origen, Destino, Distancia) :-

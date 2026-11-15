@@ -1,4 +1,6 @@
-:- ensure_loaded('main.pl').
+:- use_module(library(csv)).
+:- use_module('LecturaDeArchivosCSV/lectura-csv.pl').
+:- use_module('rutas.pl').
 
 % FA - Autor: Diego Alejandro Chuquiure Vargas.
 % C++ deja tres CSV de consulta. Prolog responde en plan_transbordo.txt.
@@ -6,8 +8,8 @@ consulta_transbordo :-
     csv_read_file('consulta_transbordo.csv', [_, row(Origen, Destino)], [strip(true)]),
     csv_read_file('puntos_transbordo.csv', [_|Puntos], [strip(true)]),
     csv_read_file('conexiones_transbordo.csv', [_|Conexiones], [strip(true)]),
-    retractall(punto(_, _, _, _, _)),
-    retractall(conexion(_, _, _, _, _)),
+    retractall(lectura_csv:punto(_, _, _, _, _)),
+    retractall(lectura_csv:conexion(_, _, _, _, _)),
     guardar_puntos(Puntos),
     guardar_conexiones(Conexiones),
     open('plan_transbordo.txt', write, Archivo),

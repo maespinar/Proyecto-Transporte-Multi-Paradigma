@@ -10,6 +10,9 @@ $ErrorActionPreference = 'Stop'
 if (-not $Compilador) {
     $comandoCpp = Get-Command g++ -ErrorAction SilentlyContinue
     if ($comandoCpp) { $Compilador = $comandoCpp.Source }
+    elseif (Test-Path -LiteralPath 'C:\msys64\ucrt64\bin\g++.exe') {
+        $Compilador = 'C:\msys64\ucrt64\bin\g++.exe'
+    }
     elseif (Test-Path -LiteralPath 'C:\msys64\mingw64\bin\g++.exe') {
         $Compilador = 'C:\msys64\mingw64\bin\g++.exe'
     }
@@ -41,10 +44,10 @@ try {
         $env:PATH = (Split-Path -Parent $Prolog) + ';' + $env:PATH
     }
     else { Write-Host 'La opcion 9 requiere SWI-Prolog. Puede indicar su ruta con -Prolog.' }
-    New-Item -ItemType Directory -Force -Path build | Out-Null
-    & $Compilador -std=c++11 cpp/main.cpp cpp/Registro/registro.cpp cpp/Transbordos/transbordos.cpp cpp/data/structures.cpp cpp/data/persistencia.cpp -o build/transporte.exe
+    New-Item -ItemType Directory -Force -Path .vscode/build | Out-Null
+    & $Compilador -std=c++17 -Icpp/data cpp/main.cpp cpp/CargaInicial/carga-inicial.cpp cpp/MenuPrincipal/menu-principal.cpp cpp/CalculoDeEmisionesCO2/emisiones.cpp cpp/Generacion-CSV/guardar-datos.cpp cpp/Gestion-Estados/actualizar-conexion.cpp cpp/Gestion-Estados/asignar-pedido-unidad.cpp cpp/Gestion-Estados/marcar-pedido.cpp cpp/Registro/registro.cpp cpp/Transbordos/transbordos.cpp cpp/data/structures.cpp cpp/data/persistencia.cpp -o .vscode/build/transporte.exe
     if ($LASTEXITCODE -ne 0) { throw 'La compilacion de C++ fallo.' }
-    & .\build\transporte.exe $CarpetaDatos
+    & .\.vscode\build\transporte.exe $CarpetaDatos
     if ($LASTEXITCODE -ne 0) { throw 'La ejecucion del sistema termino con un error.' }
 }
 finally {

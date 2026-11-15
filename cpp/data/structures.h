@@ -1,5 +1,4 @@
-#ifndef STRUCTURES_H
-#define STRUCTURES_H
+#pragma once
 
 #include <string>
 
@@ -89,5 +88,3 @@ string estadoConexionToString(EstadoConexion e);
 string estadoUnidadToString(EstadoUnidad e);
 string prioridadToString(PrioridadPedido p);
 string estadoPedidoToString(EstadoPedido e);
-
-#endif
