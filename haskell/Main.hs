@@ -1,10 +1,18 @@
-module Main (main, module Tipos, module LecturaCSV, module Emisiones, module Rutas) where
+module Main where
 
-import DefinicionDeTipos.Tipos as Tipos
-import LecturaDeArchivosCSV.LecturaCSV as LecturaCSV
-import CalculoDeEmisionesCO2.Emisiones as Emisiones
-import CalculoDeRutas.Rutas as Rutas
-import Reportes.ReporteInicial (mostrarReporteInicial)
+import LecturaDeArchivosCSV.LecturaCSV
+import Reportes.ReporteInicial
+import Reportes.ReporteResultados
+import DemandaParaderos.DemandaParaderos
 
 main :: IO ()
-main = mostrarReporteInicial
+main = do
+    mostrarReporteInicial
+
+    puntos <- cargarPuntos "data/puntos.csv"
+    conexiones <- cargarConexiones "data/conexiones.csv"
+    unidades <- cargarUnidades "data/unidades.csv"
+    pedidos <- cargarPedidos "data/pedidos.csv"
+
+    mostrarReporte pedidos conexiones unidades
+    mostrarTodos puntos pedidos

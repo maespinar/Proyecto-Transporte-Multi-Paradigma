@@ -180,3 +180,203 @@ swipl -q -s tests/rutas_test.pl -g run_tests -t halt
 ```
 
 En Linux usar las mismas compilaciones con nombres sin `.exe` y ejecutar `./build/<nombre>`. La prueba de integración invoca Prolog de verdad, usa CSV en una carpeta temporal y comprueba registro de las cuatro entidades, rechazos, persistencia, reinicio y asignación de dos buses. No cambia `data/` ni `tests/data/`.
+
+
+
+---
+
+## Aporte del Integrante 4 - Renzo Muñoz Guevara
+
+### Funcionalidades implementadas
+
+| Código | Lenguaje | Funcionalidad |
+|---|---|---|
+| 4.1.6 | C++ | Consultas básicas de puntos, conexiones y pedidos |
+| 4.1.7 | C++ | Reporte general del sistema |
+| 4.2.7 | Haskell | Resumen de pedidos, rutas posibles y costos de transporte |
+| FA | Haskell | Detección de puntos con alta demanda de pasajeros |
+| 4.3.5 | Prolog | Verificar si una unidad puede atender un pedido |
+| 4.3.6 | Prolog | Identificar pedidos pendientes inaccesibles |
+
+### Ejecutar C++
+
+Desde PowerShell, ubicarse en la carpeta principal del proyecto y ejecutar:
+
+```powershell
+.\ejecutar.ps1
+```
+
+El script compila los archivos C++ y ejecuta el menú principal.
+
+#### 4.1.6 - Consultas básicas
+
+Seleccionar la opción `10` del menú principal.
+
+Permite realizar las siguientes consultas:
+
+1. Mostrar puntos registrados.
+2. Consultar conexiones de un punto.
+3. Consultar pedidos por estado.
+4. Consultar pedidos asignados a una unidad.
+
+#### 4.1.7 - Reporte general
+
+Seleccionar la opción `11` del menú principal.
+
+Muestra los indicadores generales del sistema.
+
+**Resultados obtenidos durante las pruebas:**
+
+| Indicador | Resultado |
+|---|---:|
+| Puntos registrados | 47 |
+| Conexiones habilitadas | 45 |
+| Conexiones cerradas | 1 |
+| Unidades disponibles | 8 |
+| Pedidos pendientes | 6 |
+| Pedidos asignados | 4 |
+| Pedidos entregados | 4 |
+| Unidad con más pedidos | U01 |
+| Cantidad de pedidos de U01 | 3 |
+
+Los resultados pueden cambiar si se modifican los archivos CSV.
+
+### Ejecutar Haskell
+
+Desde PowerShell, ubicarse en la carpeta principal del proyecto y ejecutar:
+
+```powershell
+runghc -ihaskell haskell/Main.hs
+```
+
+Se mostrarán los siguientes resultados:
+
+- Resumen de datos cargados.
+- Conectividad y rutas habilitadas.
+- Reporte ambiental de los buses.
+- Resumen de pedidos, rutas posibles y costos de transporte.
+- Demanda de pasajeros por punto entre las 18:00 y las 19:00.
+
+#### 4.2.7 - Resumen de resultados
+
+El módulo `ReporteResultados.hs` permite:
+
+- Mostrar la información de cada pedido.
+- Calcular la cantidad de rutas posibles.
+- Calcular la distancia de la primera ruta habilitada encontrada.
+- Estimar el costo de esa ruta para cada unidad.
+- Contar los pedidos pendientes según su prioridad.
+
+#### Funcionalidad adicional - Detección de puntos con alta demanda
+
+El módulo `DemandaParaderos.hs` analiza los pedidos pendientes según el punto de origen y la franja horaria.
+
+Utiliza `filter`, `map` y `sum` para calcular la demanda de pasajeros.
+
+**Ejemplo con los datos de prueba:**
+
+| Punto | Pasajeros pendientes | Estado |
+|---|---:|---|
+| P01 | 75 | Demanda alta |
+| P14 | 95 | Demanda alta |
+
+Se considera demanda alta cuando la cantidad de pasajeros pendientes supera el límite configurado de 70 pasajeros.
+
+### Ejecutar Prolog
+
+Desde PowerShell, ubicarse en la carpeta principal del proyecto y abrir SWI-Prolog:
+
+```powershell
+& "C:\Program Files\swipl\bin\swipl.exe" -q -s prolog/main.pl
+```
+
+Si `swipl` está configurado en el PATH de Windows, también se puede ejecutar:
+
+```powershell
+swipl -q -s prolog/main.pl
+```
+
+Dentro de Prolog, cargar los datos:
+
+```prolog
+cargar_todo.
+```
+
+Importar las funcionalidades del integrante 4:
+
+```prolog
+use_module('prolog/GestionPedidos/gestion-pedidos.pl').
+```
+
+#### 4.3.5 - Unidades que pueden atender un pedido
+
+Verifica que el pedido esté pendiente, la unidad esté disponible y su capacidad sea suficiente.
+
+Consultar una unidad compatible con el pedido S009:
+
+```prolog
+puede_atender(Unidad, 'S009').
+```
+
+Mostrar todas las unidades compatibles:
+
+```prolog
+findall(Unidad, puede_atender(Unidad, 'S009'), Lista).
+```
+
+#### 4.3.6 - Pedidos inaccesibles
+
+Identifica los pedidos pendientes que no tienen una ruta habilitada entre su origen y destino.
+
+Consultar los pedidos inaccesibles:
+
+```prolog
+pedido_inaccesible(Pedido).
+```
+
+Mostrar todos los pedidos inaccesibles:
+
+```prolog
+findall(Pedido, pedido_inaccesible(Pedido), Lista).
+```
+
+**Resultados obtenidos durante las pruebas:**
+
+```text
+Lista = ['S009', 'S010', 'S013'].
+```
+
+#### Comandos adicionales de Prolog
+
+| Acción | Comando |
+|---|---|
+| Recargar archivos modificados | `make.` |
+| Mostrar resumen de datos | `resumen_datos.` |
+| Verificar si S009 es inaccesible | `pedido_inaccesible('S009').` |
+| Salir de Prolog | `halt.` |
+
+### Archivos del integrante 4
+
+**C++**
+
+- `cpp/Consultas/consultas.h`
+- `cpp/Consultas/consultas.cpp`
+- `cpp/ReporteGeneral/reporte-general.h`
+- `cpp/ReporteGeneral/reporte-general.cpp`
+
+**Haskell**
+
+- `haskell/Reportes/ReporteResultados.hs`
+- `haskell/DemandaParaderos/DemandaParaderos.hs`
+
+**Prolog**
+
+- `prolog/GestionPedidos/gestion-pedidos.pl`
+
+Las funcionalidades de C++ están integradas en `cpp/MenuPrincipal/menu-principal.cpp` mediante las opciones 10 y 11.
+
+Las funcionalidades de Haskell se ejecutan desde `haskell/Main.hs`.
+
+Las funcionalidades de Prolog utilizan los datos cargados mediante `prolog/LecturaDeArchivosCSV/lectura-csv.pl`.
+
+Los tres lenguajes trabajan con los archivos CSV compartidos de la carpeta `data/`.
