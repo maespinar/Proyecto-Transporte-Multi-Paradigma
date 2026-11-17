@@ -4,12 +4,18 @@ import ControlDeAutonomia.Autonomia (reporteAutonomia)
 import DefinicionDeTipos.Tipos
 import LecturaDeArchivosCSV.LecturaCSV
 import Reportes.ReporteInicial (mostrarReporteInicial)
+import Reportes.ReporteResultados (mostrarReporte)
+import DemandaParaderos.DemandaParaderos (mostrarTodos)
 
 ejecutarMenuHaskell :: IO ()
 ejecutarMenuHaskell = do
+    mostrarReporteInicial
+    puntos <- cargarPuntos "data/puntos.csv"
     conexiones <- cargarConexiones "data/conexiones.csv"
     unidades <- cargarUnidades "data/unidades.csv"
     pedidos <- cargarPedidos "data/pedidos.csv"
+    mostrarReporte pedidos conexiones unidades
+    mostrarTodos puntos pedidos
     entrada <- getContents
     mostrarMenu (lines entrada) conexiones unidades pedidos
 
