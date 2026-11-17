@@ -45,7 +45,7 @@ try {
     }
     else { Write-Host 'La opcion 9 requiere SWI-Prolog. Puede indicar su ruta con -Prolog.' }
     New-Item -ItemType Directory -Force -Path .vscode/build | Out-Null
-    & $Compilador -std=c++17 -Icpp/data cpp/main.cpp cpp/CargaInicial/carga-inicial.cpp cpp/MenuPrincipal/menu-principal.cpp cpp/CalculoDeEmisionesCO2/emisiones.cpp cpp/ControlDeAutonomia/autonomia.cpp cpp/Generacion-CSV/guardar-datos.cpp cpp/Gestion-Estados/actualizar-conexion.cpp cpp/Gestion-Estados/asignar-pedido-unidad.cpp cpp/Gestion-Estados/marcar-pedido.cpp cpp/Registro/registro.cpp cpp/Transbordos/transbordos.cpp cpp/data/structures.cpp cpp/data/persistencia.cpp -o .vscode/build/transporte.exe
+    & $Compilador -std=c++17 -Icpp/data cpp/main.cpp cpp/CargaInicial/carga-inicial.cpp cpp/MenuPrincipal/menu-principal.cpp cpp/CalculoDeEmisionesCO2/emisiones.cpp cpp/ControlDeAutonomia/autonomia.cpp cpp/ControlDeAutonomia/auxiliares.cpp cpp/Generacion-CSV/guardar-datos.cpp cpp/Gestion-Estados/actualizar-conexion.cpp cpp/Gestion-Estados/asignar-pedido-unidad.cpp cpp/Gestion-Estados/marcar-pedido.cpp cpp/Registro/registro.cpp cpp/Transbordos/transbordos.cpp cpp/data/structures.cpp cpp/data/persistencia.cpp -o .vscode/build/transporte.exe
     if ($LASTEXITCODE -ne 0) { throw 'La compilacion de C++ fallo.' }
     & .\.vscode\build\transporte.exe $CarpetaDatos
     if ($LASTEXITCODE -ne 0) { throw 'La ejecucion del sistema termino con un error.' }
