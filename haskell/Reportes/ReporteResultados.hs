@@ -12,11 +12,11 @@ contarPendientes prioridad pedidos =
 
 mostrarResumenPedido :: [Conexion] -> [Unidad] -> Pedido -> IO ()
 mostrarResumenPedido conexiones unidades pedido = do
-    let rutas = rutasPosibles (origPedido pedido) (destPedido pedido) conexiones
+    let rutas = rutasPosibles (codPunto (origPedido pedido)) (codPunto (destPedido pedido)) conexiones
 
     putStrLn ("Pedido: " ++ codPedido pedido)
-    putStrLn ("Origen: " ++ origPedido pedido)
-    putStrLn ("Destino: " ++ destPedido pedido)
+    putStrLn ("Origen: " ++ codPunto (origPedido pedido))
+    putStrLn ("Destino: " ++ codPunto (destPedido pedido))
     putStrLn ("Pasajeros: " ++ show (cargaPedido pedido))
     putStrLn ("Estado: " ++ show (estadoPedido pedido))
     putStrLn ("Rutas posibles: " ++ show (length rutas))

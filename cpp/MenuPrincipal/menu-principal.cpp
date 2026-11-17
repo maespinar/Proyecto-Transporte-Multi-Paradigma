@@ -3,6 +3,7 @@
 #include "../CalculoDeEmisionesCO2/emisiones.h"
 #include "../Registro/registro.h"
 #include "../Transbordos/transbordos.h"
+#include "../ControlDeAutonomia/autonomia.h"
 #include <iostream>
 #include <string>
 #include "../Consultas/consultas.h"
@@ -33,6 +34,8 @@ void mostrarMenu() {
   cout << "9. Planificar y asignar transbordo ante contingencia" << endl;
   cout << "10. Consultas basicas" << endl;//renzo
   cout << "11. Reporte general" << endl;//renzo
+  cout << "12. Verificar autonomia y mantenimiento de un bus" << endl;
+  cout << "13. Asignar pedido con control de autonomia" << endl;
   cout << "Seleccione una opcion: ";
 }
 
@@ -102,6 +105,8 @@ void ejecutarMenuPrincipal(vector<Punto> &puntos,
       realizarConsultas(puntos, conexiones, pedidos);
     } else if (opcion == 11) {
       mostrarReporteGeneral(puntos, conexiones, unidades, pedidos);
+    } else if (opcion == 12 || opcion == 13) {
+      procesarAutonomia(pedidos, unidades, conexiones, carpetaDatos, opcion == 13);
     } else {
       cout << "Opcion no valida, intente nuevamente." << endl;
     }

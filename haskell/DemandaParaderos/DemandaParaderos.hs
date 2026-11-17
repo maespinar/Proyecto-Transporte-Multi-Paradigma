@@ -6,7 +6,7 @@ import DefinicionDeTipos.Tipos
 calcularDemanda :: String -> String -> String -> [Pedido] -> Int
 calcularDemanda paradero inicio fin pedidos =
     sum (map cargaPedido (filter (\p ->
-        origPedido p == paradero &&
+        codPunto (origPedido p) == paradero &&
         estadoPedido p == Pendiente &&
         horaSolicitud p >= inicio &&
         horaSolicitud p < fin) pedidos))
