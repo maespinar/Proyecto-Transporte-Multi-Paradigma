@@ -3,6 +3,7 @@
 #include "../CalculoDeEmisionesCO2/emisiones.h"
 #include "../Registro/registro.h"
 #include "../Transbordos/transbordos.h"
+#include "../ControlDeAutonomia/autonomia.h"
 #include <iostream>
 #include <string>
 
@@ -29,6 +30,8 @@ void mostrarMenu() {
   cout << "7. Salir" << endl;
   cout << "8. Registrar punto, conexion, unidad o solicitud" << endl;
   cout << "9. Planificar y asignar transbordo ante contingencia" << endl;
+  cout << "10. Verificar autonomia y mantenimiento de un bus" << endl;
+  cout << "11. Asignar pedido con control de autonomia" << endl;
   cout << "Seleccione una opcion: ";
 }
 
@@ -94,6 +97,8 @@ void ejecutarMenuPrincipal(vector<Punto> &puntos,
     } else if (opcion == 9) {
       procesarTransbordo(pedidos, unidades, puntos, conexiones, carpetaDatos,
                          "prolog/consulta_transbordo.pl");
+    } else if (opcion == 10 || opcion == 11) {
+      procesarAutonomia(pedidos, unidades, conexiones, carpetaDatos, opcion == 11);
     } else {
       cout << "Opcion no valida, intente nuevamente." << endl;
     }

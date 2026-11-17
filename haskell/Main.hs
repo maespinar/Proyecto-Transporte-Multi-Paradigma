@@ -4,7 +4,7 @@ import DefinicionDeTipos.Tipos as Tipos
 import LecturaDeArchivosCSV.LecturaCSV as LecturaCSV
 import CalculoDeEmisionesCO2.Emisiones as Emisiones
 import CalculoDeRutas.Rutas as Rutas
-import Reportes.ReporteInicial (mostrarReporteInicial)
+import MenuPrincipal.Menu (ejecutarMenuHaskell)
 
 main :: IO ()
-main = mostrarReporteInicial
+main = ejecutarMenuHaskell

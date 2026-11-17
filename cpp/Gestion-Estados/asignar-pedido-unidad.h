@@ -1,7 +1,9 @@
-#include "structures.h"
-#include <iostream>
-#include <string>
+#pragma once
+
+#include "../data/structures.h"
+#include <vector>
 
 using namespace std;
 
-void asignarPedidoUnidad(Pedido& pedido, const Unidad& unidadAsignada, const string& horaSolicitud);
+bool asignarPedidoUnidad(Pedido& pedido, Unidad& unidadAsignada, const string& horaSolicitud,
+                        const vector<Conexion>& conexiones);

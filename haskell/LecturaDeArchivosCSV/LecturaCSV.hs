@@ -1,6 +1,7 @@
 module LecturaDeArchivosCSV.LecturaCSV where
 
 import DefinicionDeTipos.Tipos
+import System.FilePath ((</>), takeDirectory)
 
 trim :: String -> String
 trim = reverse . dropWhile esBlanco . reverse . dropWhile esBlanco
@@ -68,10 +69,28 @@ parseUnidad linea =
     let cols = map trim (splitPorComa linea)
     in Unidad (cols !! 0) (cols !! 1) (read (cols !! 2)) (read (cols !! 3)) (parseEstadoUnidad (cols !! 4)) (parseCombustible (cols !! 5)) (read (cols !! 6)) (read (cols !! 7)) (read (cols !! 8))
 
-parsePedido :: String -> Pedido
-parsePedido linea =
-    let cols = map trim (splitPorComa linea)
-    in Pedido (cols !! 0) (cols !! 1) (cols !! 2) (read (cols !! 3)) (parsePrioridad (cols !! 4)) (parseEstadoPedido (cols !! 5)) (cols !! 6) (cols !! 7) (if length cols > 8 then cols !! 8 else "")
+parsePedido :: [Punto] -> String -> Either String Pedido
+parsePedido puntos linea =
+    let columnas = map trim (splitPorComa linea)
+        completas = if length columnas == 8 then columnas ++ [""] else columnas
+    in case completas of
+        [codigo, origen, destino, carga, prioridad, estado, unidad, hora, transbordo] -> do
+            inicio <- case filter ((== origen) . codPunto) puntos of
+                punto:_ -> Right punto
+                [] -> Left ("Punto de origen inexistente: " ++ origen)
+            fin <- case filter ((== destino) . codPunto) puntos of
+                punto:_ -> Right punto
+                [] -> Left ("Punto de destino inexistente: " ++ destino)
+            pasajeros <- case reads carga of
+                [(numero, "")] -> Right numero
+                _ -> Left ("Carga invalida en " ++ codigo)
+            if codigo == "" || pasajeros <= 0 ||
+               (prioridad `elem` ["alta", "media", "baja"]) == False ||
+               (estado `elem` ["pendiente", "asignado", "entregado"]) == False
+                then Left ("Datos invalidos en la solicitud " ++ codigo)
+                else Right (Pedido codigo inicio fin pasajeros (parsePrioridad prioridad)
+                            (parseEstadoPedido estado) unidad hora transbordo)
+        _ -> Left "Columnas invalidas en una solicitud."
 
 cargarPuntos :: FilePath -> IO [Punto]
 cargarPuntos ruta = do
@@ -93,7 +112,10 @@ cargarUnidades ruta = do
 
 cargarPedidos :: FilePath -> IO [Pedido]
 cargarPedidos ruta = do
+    puntos <- cargarPuntos (takeDirectory ruta </> "puntos.csv")
     contenido <- readFile ruta
     let filas = drop 1 (lines contenido)
-    return [parsePedido f | f <- filas, not (null (trim f))]
+        resultados = [parsePedido puntos f | f <- filas, trim f /= ""]
+    mapM_ (putStrLn . ("Aviso: se omite una solicitud. " ++)) [mensaje | Left mensaje <- resultados]
+    return [pedido | Right pedido <- resultados]
 
